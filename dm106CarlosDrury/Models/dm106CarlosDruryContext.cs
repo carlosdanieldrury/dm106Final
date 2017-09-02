@@ -20,5 +20,7 @@ namespace dm106CarlosDrury.Models
         }
 
         public System.Data.Entity.DbSet<dm106CarlosDrury.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<dm106CarlosDrury.Models.Order> Orders { get; set; }
     }
 }

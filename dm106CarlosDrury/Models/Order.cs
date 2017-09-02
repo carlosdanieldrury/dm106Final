@@ -24,6 +24,9 @@ namespace dm106CarlosDrury.Models
 
         public decimal shipmentPrice { get; set; }
 
-        public List<Product> products { get; set; }
+        public virtual ICollection<OrderItem> OrderItems
+        {
+            get; set;
+        }
     }
 }

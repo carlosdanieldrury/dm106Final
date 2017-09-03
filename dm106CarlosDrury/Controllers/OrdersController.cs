@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using dm106CarlosDrury.Models;
+using dm106CarlosDrury.CRMClient;
+using dm106CarlosDrury.br.com.correios.ws;
 
 namespace dm106CarlosDrury.Controllers
 {
@@ -17,6 +19,47 @@ namespace dm106CarlosDrury.Controllers
     public class OrdersController : ApiController
     {
         private dm106CarlosDruryContext db = new dm106CarlosDruryContext();
+
+        [ResponseType(typeof(string))]
+        [HttpGet]
+        [Route("frete")]
+        public IHttpActionResult CalculaFrete()
+        {
+            string frete;
+
+            CalcPrecoPrazoWS correios = new CalcPrecoPrazoWS();
+
+            cResultado resultado = correios.CalcPrecoPrazo("", "", "40010", "37540000", "37002970", "1", 1, 30, 30, 30, 30, "N", 100, "S");
+
+            if (resultado.Servicos[0].Erro.Equals("0"))
+            {
+                frete = "Valor do frete: " + resultado.Servicos[0].Valor + " - Prazo de entrega: " + resultado.Servicos[0].PrazoEntrega + " dia(s)";
+                return Ok(frete);
+            }
+            else
+            {
+                return BadRequest("Código do erro: " + resultado.Servicos[0].Erro + "-" + resultado.Servicos[0].MsgErro);
+            }
+        }
+
+        [ResponseType(typeof(string))]
+        [HttpGet]
+        [Route("cep")]
+        public IHttpActionResult obtemCEP()
+        {
+            CRMRestClient crmClient = new CRMRestClient();
+            Customer customer = crmClient.GetCustomerByEmail(User.Identity.Name);
+
+            if (customer != null)
+            {
+                return Ok(customer.zip);
+            }
+            else
+            {
+                return BadRequest("Falha ao consultar o CRM");
+            }
+        }
+
 
         // GET: api/Orders
         public List<Order> GetOrders()

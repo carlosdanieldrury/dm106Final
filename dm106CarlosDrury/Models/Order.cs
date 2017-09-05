@@ -7,7 +7,6 @@ namespace dm106CarlosDrury.Models
 {
     public class Order
     {
-        enum statuses { novo, fechado, cancelado, entregue }
         public int Id { get; set; }
 
         public string emailUser { get; set; }

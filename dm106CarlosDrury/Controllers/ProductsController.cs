@@ -30,7 +30,7 @@ namespace dm106CarlosDrury.Controllers
             Product product = db.Products.Find(id);
             if (product == null)
             {
-                return NotFound();
+                return BadRequest("Product was not found");
             }
 
             return Ok(product);
@@ -96,7 +96,7 @@ namespace dm106CarlosDrury.Controllers
             Product product = db.Products.Find(id);
             if (product == null)
             {
-                return NotFound();
+                return BadRequest("Product was not deleted");
             }
 
             db.Products.Remove(product);

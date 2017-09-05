@@ -29,6 +29,8 @@ namespace dm106CarlosDrury.Models
 
         public decimal altura { get; set; }
 
+        public decimal largura { get; set; }
+
         public decimal comprimento { get; set; }
 
         public decimal diametro { get; set; }

@@ -13,7 +13,7 @@ namespace dm106CarlosDrury.Models
 
         public DateTime orderDate { get; set; }
 
-        public DateTime deliveryDate { get; set; }
+        public DateTime? deliveryDate { get; set; }
 
         public string status { get; set; }
 

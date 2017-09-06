@@ -31,7 +31,7 @@ namespace dm106CarlosDrury.Controllers
 
             if (order == null)
             {
-                return NotFound();
+                return BadRequest("Order was not found!");
             }
             else
             {
@@ -113,7 +113,7 @@ namespace dm106CarlosDrury.Controllers
             Order order = db.Orders.Find(id);
 
             if (order == null)
-                return NotFound();
+                return BadRequest("Order was not found!");
 
             if (order.emailUser == User.Identity.Name || User.IsInRole("ADMIN"))
             {
@@ -158,7 +158,7 @@ namespace dm106CarlosDrury.Controllers
             if (order != null && (order.emailUser == User.Identity.Name || User.IsInRole("ADMIN")))
                 return Ok(order);
             else
-                return NotFound();
+                return BadRequest("Order was not found");
         }
 
         // PUT: api/Orders/5
@@ -174,7 +174,7 @@ namespace dm106CarlosDrury.Controllers
 
                 if (id != order.Id)
                 {
-                    return BadRequest();
+                    return BadRequest("This id does not belong to this Order!");
                 }
 
                 db.Entry(order).State = EntityState.Modified;
@@ -187,7 +187,7 @@ namespace dm106CarlosDrury.Controllers
                     }
                     else
                     {
-                        return BadRequest();
+                        return BadRequest("Authorization Denied! Only admin or the order owner allowed!");
                     }
 
                 }
@@ -195,7 +195,7 @@ namespace dm106CarlosDrury.Controllers
                 {
                     if (!OrderExists(id))
                     {
-                        return NotFound();
+                        return BadRequest("Order not found on database!");
                     }
                     else
                     {
@@ -245,7 +245,7 @@ namespace dm106CarlosDrury.Controllers
             Order order = db.Orders.Find(id);
 
             if (order == null)
-                return NotFound();
+                return BadRequest("Order was not found!");
 
             if (order.emailUser == User.Identity.Name || User.IsInRole("ADMIN"))
             {
